@@ -1,9 +1,0 @@
-cluster1-datacenter-hostername,memory,usage,2017-10-26 10:19:10,value:-50.000000 
-cluster1-datacenter-hostername,cpu,usage,2017-10-26 10:19:10,value:-50.000000 
-cluster1-datacenter-hostername,disk,usage,2017-10-26 10:19:10,read:-50.000000 write:-50.000000 
-cluster1-datacenter-hostername,memory,usage,2017-10-26 10:19:20,value:-50.000000 
-cluster1-datacenter-hostername,cpu,usage,2017-10-26 10:19:20,value:-50.000000 
-cluster1-datacenter-hostername,disk,usage,2017-10-26 10:19:20,read:-50.000000 write:-50.000000 
-cluster1-datacenter-hostername,memory,usage,2017-10-26 10:19:30,value:-40.000000 
-cluster1-datacenter-hostername,cpu,usage,2017-10-26 10:19:30,value:-40.000000 
-cluster1-datacenter-hostername,disk,usage,2017-10-26 10:19:30,read:-40.000000 write:-40.000000 
