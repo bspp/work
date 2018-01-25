@@ -42,12 +42,11 @@ int main(void)
 	{
 		glob++;
 		var++;
-		printf("pid = %d,ppid = %d ,glob = %d var = %d\n",getpid(),getppid(),glob,var);
+		printf("clild pid = %d,ppid = %d ,glob = %d var = %d\n",getpid(),getppid(),glob,var);
 	}else
 	{
 		sleep(2);
-		printf("child pid : %d\n",pid);
-		printf("pid = %d,ppid = %d ,glob = %d var = %d\n",getpid(),getppid(),glob,var);
+		printf("main pid = %d,ppid = %d ,glob = %d var = %d\n",getpid(),getppid(),glob,var);
 	}
 
 
