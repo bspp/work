@@ -132,6 +132,11 @@ static void* thread_do(THREAD_S *ps_thread)
 	pthread_mutex_lock(&ps_pthread_pool->thcount_lock);
 	ps_pthread_pool->num_threads_alive++;
 	pthread_mutex_unlock(&ps_pthread_pool->thcount_lock);
+
+	while(threads_keepalive)
+	{
+
+	}
 }
 
 /* Init job queue*/
