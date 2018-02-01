@@ -135,9 +135,43 @@ static void* thread_do(THREAD_S *ps_thread)
 
 	while(threads_keepalive)
 	{
+		bsem_wait(ps_pthread_pool->s_job_queue.ps_has_jobs);
 
+			if(threads_keepalive)
+			{
+				pthread_mutex_lock(&ps_pthread_pool->thcount_lock);
+				ps_pthread_pool->num_threads_working++;
+				pthread_mutex_lock(&ps_pthread_pool->thcount_lock);
+
+				//read job from queue and execute it 
+				void (*func_buff)(void*);
+				void*  arg_buff;
+
+				JOB_S *ps_job = job_queue_pull(&ps_pthread_pool->s_job_queue);
+				if(ps_job != NULL)
+				{
+					func_buff = ps_job->function;
+					arg_buff = ps_job->arg;
+					func_buff(arg_buff);
+					free(ps_job);
+				}
+
+				pthread_mutex_lock(&ps_pthread_pool->thcount_lock);
+				ps_pthread_pool->num_threads_working--;
+				if(!ps_pthread_pool->num_threads_working)
+				{
+					pthread_cond_signal(&ps_pthread_pool->threads_all_idle);/* signal to pthread_pool wait */
+				}
+				pthread_mutex_unlock(&ps_pthread_pool->thcount_lock);
+			}
 	}
+
+	pthread_mutex_lock(&ps_pthread_pool->thcount_lock);
+	ps_pthread_pool->num_threads_alive--;
+	pthread_mutex_unlock(&ps_pthread_pool->thcount_lock);
 }
+
+/************************************* JOB QUEUE *************************************/
 
 /* Init job queue*/
 static int job_queue_init(JOB_QUEUE_S *ps_job_queue)
@@ -232,6 +266,8 @@ static void job_queue_destroy(JOB_QUEUE_S *ps_job_queue)
 	free(ps_job_queue);
 	ps_job_queue = NULL;
 }
+
+/************************************* bsem *************************************/
 
 /* Init semaphore to 1 or 0 */
 static void bsem_init(BSEG_S *ps_bseg,int value)
