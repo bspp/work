@@ -26,7 +26,6 @@ int main()
 	int port_client = 8001;
 	int sockfd = 0;
 	int status = 0;
-	char *str = "test string";
 
 	sockfd = socket(AF_INET,SOCK_STREAM,0);
 	if(sockfd < 0)
@@ -55,7 +54,6 @@ int main()
 	}
 	
 	close(sockfd);
-
 
 	return 0;
 }
