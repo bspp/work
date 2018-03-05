@@ -24,7 +24,6 @@ int strsplit(char *string, char **fields, size_t size) {
 
 		if (i >= size)
 			break;
-
 	}
 
 	return (int)i;
