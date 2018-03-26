@@ -24,10 +24,12 @@ int main()
 {
 	struct sockaddr_in server_addr_in;
 	struct sockaddr_in client_addr_in;
-	char buf[100] = "kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk";
+	char buf[100] = "abcdefg";
 	int port_server = 8000;
+	//int port_client = 8000;
 	int sockfd = 0;
 	int status = 0;
+	int flags = 0;
 
 	sockfd = socket(AF_INET,SOCK_STREAM,0);
 	if(sockfd < 0)
@@ -44,26 +46,39 @@ int main()
 	//	checkResults("bind()");
 	
 
+	//flags = fcntl(sockfd,F_GETFL,0);
+	//fcntl(sockfd,F_SETFL,flags|O_NONBLOCK);
+	
 	memset(&server_addr_in,'\0',sizeof(server_addr_in));
 	server_addr_in.sin_family = AF_INET;
 	server_addr_in.sin_port = htons(port_server);
-	server_addr_in.sin_addr.s_addr = inet_pton("172.16.56.42");
-	//server_addr_in.sin_addr.s_addr = htonl(inet_pton("172.16.56.42"));
+	server_addr_in.sin_addr.s_addr = inet_addr("172.16.56.42");//Host to NetWork Long
+	//server_addr_in.sin_addr.s_addr = htonl(inet_addr("172.16.56.42"));//Host to NetWork Long
+
 
 	status = connect(sockfd,(struct sockaddr*)&server_addr_in,sizeof(server_addr_in));
 	if(0 > status)
 	{
-		printf("ERRNO:%d",errno);
-		return -1;
+		if(errno != EINPROGRESS)
+		{
+			 status = connect(sockfd, (struct sockaddr *)&server_addr_in, sizeof(struct sockaddr));
+			 if (0 != status && errno != EINPROGRESS)
+			 {
+				 close(sockfd);
+				 return -1;
+			 }
+
+		}
+	}else if(status == 0)
+	{
+		printf("socket connect succeed immediately.\n");  
 	}
-	printf("=====================================================");
+
 	while(1){
 		int n = send(sockfd,buf,100,0);
-		if(n <= 0)
-		{
-			break;
-		}
-		printf("Recive from server %s \n",buf);
+		sleep(1);
+		printf("n len is %d\n",n);
+		printf("send buffer to  from server %s \n",buf);
 	}
 	
 	close(sockfd);
