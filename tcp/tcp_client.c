@@ -56,7 +56,6 @@ int main()
 		printf("ERRNO:%d",errno);
 		return -1;
 	}
-	printf("=====================================================");
 	while(1){
 		int n = send(sockfd,buf,100,0);
 		if(n <= 0)
