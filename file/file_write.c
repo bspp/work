@@ -18,13 +18,8 @@ int main(int argc,char **argv)
 	FILE *fp = NULL;
 	long file_size = 0;
 
-	file_size = get_file_size(filename);
 	memset(data,'d',1024);
 
-	if(file_size/1024/1024/1024 == 2)
-	{
-		remove(filename);
-	}
 
 	fp = fopen(filename,"a+");
 	if(fp == NULL)
@@ -33,14 +28,20 @@ int main(int argc,char **argv)
 		return -1;
 	}
 
-	printf("filezie is %ld\n",file_size);
+	file_size = get_file_size(filename);
+	printf("file szie is %ld\n",file_size);
 	if(file_size == 0)
 	{
 		for(int i = 0;i < 1024;i++)//1M
 			fprintf(fp,"%s",data);
-	}else if(file_size == 1048576)
+	}else if(file_size/1024/1024 == 1)
 	{
-		for(int i = 0;i < 1047552;i++)//1G
+		for(int i = 0;i < 130048;i++)
+			fprintf(fp,"%s",data);//128M
+	}
+	else if(file_size/1024/1024 == 128 )
+	{
+		for(int i = 0;i < 917504;i++)//1G
 			fprintf(fp,"%s",data);
 	}else if(file_size/1024 == 1048576)
 	{
