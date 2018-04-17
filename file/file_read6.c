@@ -6,7 +6,7 @@
 #include<sys/types.h>  
 #include<sys/stat.h>  
 #include<fcntl.h>  
-#define STR_LEN 1048576//定义随机输出的字符串长度。
+#define STR_LEN 16384//定义随机输出的字符串长度。
 
 
 

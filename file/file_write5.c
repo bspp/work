@@ -24,7 +24,7 @@ int main(int argc,char **argv)
 
 	memset(data,'a',STR_LEN);
 
-	fp = fopen(filename,"w");
+	fp = fopen(filename,"a+");
 	if(fp == NULL)
 	{
 		printf("open file failed");
