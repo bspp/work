@@ -29,4 +29,10 @@ int main(void)
 		free(array[i]);
 	}
 
+	char *roman_basic[13] = {"M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"};
+	for(int i = 0;i < 13;i++)
+	{
+		printf("%s--%d\n",roman_basic[i],strlen(roman_basic[i]));
+	}
+
 }
